@@ -23,6 +23,9 @@ class Session extends BaseConfig
      */
     public string $driver = FileHandler::class;
 
+
+    // Přidej tento řádek do souboru app/Config/Session.php uvnitř třídy
+    public bool $matchIP = false;
     /**
      * --------------------------------------------------------------------------
      * Session Cookie Name
@@ -62,18 +65,7 @@ class Session extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Session Match IP
-     * --------------------------------------------------------------------------
-     *
-     * Whether to match the user's IP address when reading the session data.
-     *
-     * WARNING: If you're using the database driver, don't forget to update
-     *          your session table's PRIMARY KEY when changing this setting.
-     */
-    public bool $matchIP = false;
-
-    /**
-     * --------------------------------------------------------------------------
-     * Session Time to Update
+     * ------Time to Update
      * --------------------------------------------------------------------------
      *
      * How many seconds between CI regenerating the session ID.

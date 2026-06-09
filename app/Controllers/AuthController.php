@@ -22,34 +22,53 @@ class AuthController extends BaseController
 
     public function login()
     {
-        return view('auth/login_view');
+        return view('pages/auth/login_view');
     }
+
+
     public function loginProcess()
-    {   
+    {
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
 
-        $this->authService->attemptLogin($username, $password);
+        if (! $this->validate('login')) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
 
-        
 
+        if ($this->authService->attemptLogin($username, $password)) {
+            return redirect()->to('/chat')->with('success', 'Přihlášení bylo úspěšné');
+        } else {
+            // Login failed
+            return redirect()->back()->withInput()->with('errors', ['login' => 'Neplatné uživatelské jméno nebo heslo']);
+        }
     }
+
 
     public function register()
     {
         return view('auth/register_view');
     }
+
+
     public function registerProcess()
     {
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
 
+
+        if (! $this->validate('registration')) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
         $this->authService->register($username, $password);
 
+        return redirect()->to('/login')->with('success', 'Registrace byla úspěšná, prosím přihlašte se.');
     }
 
     public function logout()
     {
-
+        session()->destroy();
+        return redirect()->to('/login')->with('success', 'Byl jste odhlášen.');
     }
 }
