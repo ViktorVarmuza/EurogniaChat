@@ -1,0 +1,19 @@
+// ER diagram vytvořený pomocí stránky dbdiagram.io
+
+
+Table users {
+  id integer [primary key]
+  username varchar(50) [unique]
+  password_hash varchar(255)
+  created_at timestamp
+}
+
+Table messages {
+  id integer [primary key]
+  user_id integer
+  content text
+  attachment_url varchar(255)
+  created_at timestamp
+}
+
+Ref: messages.user_id > users.id
