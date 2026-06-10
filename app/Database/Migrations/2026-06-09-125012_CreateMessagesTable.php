@@ -26,11 +26,20 @@ class CreateMessagesTable extends Migration
             'attachment_url' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
-                'null'       => true, 
+                'null'       => true,
             ],
             'created_at' => [
                 'type'    => 'TIMESTAMP',
                 'null'    => true,
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
+            // Ruční přidání Soft Delete sloupce
+            'deleted_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
             ],
         ]);
         $this->forge->addKey('id', true);

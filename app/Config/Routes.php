@@ -15,7 +15,6 @@ $routes->get('logout', 'AuthController::logout');
 
 
 $routes->group('', ['filter' => 'unauth'], function ($routes) {
-    $routes->get('register', 'AuthController::register');
     $routes->post('register', 'AuthController::registerProcess');
 
     $routes->get('login', 'AuthController::login');

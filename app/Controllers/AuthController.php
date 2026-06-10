@@ -22,7 +22,7 @@ class AuthController extends BaseController
 
     public function login()
     {
-        return view('pages/auth/login_view');
+        return view('pages/auth/auth_view');
     }
 
 
@@ -32,7 +32,7 @@ class AuthController extends BaseController
         $password = $this->request->getPost('password');
 
         if (! $this->validate('login')) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors(), 'login');
         }
 
 
@@ -45,10 +45,6 @@ class AuthController extends BaseController
     }
 
 
-    public function register()
-    {
-        return view('auth/register_view');
-    }
 
 
     public function registerProcess()
@@ -58,7 +54,7 @@ class AuthController extends BaseController
 
 
         if (! $this->validate('registration')) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors(), 'register');
         }
 
         $this->authService->register($username, $password);
