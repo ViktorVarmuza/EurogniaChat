@@ -17,8 +17,7 @@ class UserSeeder extends Seeder
         for ($i = 0; $i < 20; $i++) {
             $data = [
                 'username' => $faker->userName,
-                'password_hash' => password_hash('password', PASSWORD_DEFAULT),
-                'created_at'    => $faker->dateTimeBetween('-1 month', '-10 days')->format('Y-m-d H:i:s'),
+                'password_hash' => password_hash('password', PASSWORD_DEFAULT)
             ];
 
             $this->db->table('users')->insert($data);

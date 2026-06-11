@@ -31,20 +31,11 @@ class CreateMessagesTable extends Migration
             'created_at' => [
                 'type'    => 'TIMESTAMP',
                 'null'    => true,
-            ],
-            'updated_at' => [
-                'type' => 'DATETIME',
-                'null' => true,
-            ],
-            // Ruční přidání Soft Delete sloupce
-            'deleted_at' => [
-                'type' => 'DATETIME',
-                'null' => true,
-            ],
+            ]
         ]);
         $this->forge->addKey('id', true);
 
-        // Přidání cizího klíče s vazbou na tabulku users
+        
         $this->forge->addForeignKey('user_id', 'users', 'id', 'CASCADE', 'CASCADE');
 
         $this->forge->createTable('messages');

@@ -22,13 +22,15 @@ class AuthController extends BaseController
 
     public function login()
     {
-        return view('pages/auth/auth_view');
+        return view('pages/auth_view');
     }
 
 
     public function loginProcess()
     {
-        $username = $this->request->getPost('username');
+
+
+        $username = trim($this->request->getPost('username'));
         $password = $this->request->getPost('password');
 
         if (! $this->validate('login')) {
@@ -49,7 +51,7 @@ class AuthController extends BaseController
 
     public function registerProcess()
     {
-        $username = $this->request->getPost('username');
+        $username = trim($this->request->getPost('username'));
         $password = $this->request->getPost('password');
 
 

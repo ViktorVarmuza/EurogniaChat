@@ -1,6 +1,6 @@
 <?= $this->extend('layout/layout') ?>
 
-<?= $this->section('title') ?>Vítejte v Chat Roomu<?= $this->endSection() ?>
+<?= $this->section('title') ?><?= esc('Vítejte v Chat Roomu') ?><?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
 <div class="container">
@@ -27,11 +27,11 @@
                     <div class="tab-content" id="authTabsContent">
 
                         <div class="tab-pane fade show active" id="login-content" role="tabpanel">
-                            <form action="<?= base_url('login') ?>" method="POST">
+                            <form id="form-login" action="<?= esc(base_url('login'), 'attr') ?>" method="POST">
                                 <?= csrf_field() ?>
 
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="username" class="form-control" id="loginUser" placeholder="Uživatelské jméno" value="<?= old('username') ?>" required>
+                                    <input type="text" name="username" class="form-control" id="loginUser" placeholder="Uživatelské jméno" value="<?= esc(old('username'), 'attr') ?>" required>
                                     <label for="loginUser">Uživatelské jméno</label>
                                 </div>
                                 <input type="hidden" name="form_form" value="login">
@@ -46,7 +46,7 @@
                         </div>
 
                         <div class="tab-pane fade" id="register-content" role="tabpanel">
-                            <form action="<?= base_url('register') ?>" method="POST">
+                            <form id="form-register" action="<?= esc(base_url('register'), 'attr') ?>" method="POST">
                                 <?= csrf_field() ?>
 
                                 <div class="form-floating mb-3">
@@ -77,6 +77,6 @@
     </div>
 </div>
 
-
-
+<script src="<?= base_url('js/authValidation.js') ?>"></script>
 <?= $this->endSection() ?>
+

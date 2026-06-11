@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="">
         <?= $this->renderSection('content') ?>
     </div>
 </body>

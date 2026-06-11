@@ -4,27 +4,35 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
-use App\Models\MessageModel;
+
+use App\Services\MessageService;
+
 
 class ChatController extends BaseController
 {
 
-    protected $messageModel;
+    protected $messageService;
 
     public function __construct()
     {
-        $this->messageModel = new MessageModel();
+        $this->messageService = new MessageService();
     }
 
 
-    public function show(){
+    public function show()
+    {
+        $messages = $this->messageService->getChatMessages(session()->get('userId'));
 
-    
+        return view('pages/room', [
+            'messages' => $messages
+        ]);
     }
 
-    public function sendMessage(){
+    public function sendMessage() {
+        
+
+
+
 
     }
-
-    
 }

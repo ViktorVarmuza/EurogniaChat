@@ -12,7 +12,7 @@ class MessageModel extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['user_id', 'content', 'attachment_url'];
+    protected $allowedFields    = ['user_id', 'content', 'attachment_url', 'created_at'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -24,8 +24,8 @@ class MessageModel extends Model
     protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $updatedField  = '';
+    protected $deletedField  = '';
 
     // Validation
     protected $validationRules      = [];
@@ -43,4 +43,13 @@ class MessageModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+
+    public function getMessagesWithUser()
+    {
+        return $this->select('messages.*, users.username')
+            ->join('users', 'users.id = messages.user_id')
+            ->orderBy('messages.created_at', 'ASC')
+            ->findAll();
+    }
 }
