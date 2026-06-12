@@ -77,9 +77,19 @@ class Validation extends BaseConfig
                 'required' => 'Heslo je povinné.'
             ]
         ]
-
     ];
-    // --------------------------------------------------------------------
-    // Rules
-    // --------------------------------------------------------------------
-}
+
+
+    public array $message = [
+        'content' => [
+            'rules'  => 'required|trim|min_length[1]|max_length[1000]',
+            'errors' => [
+                'required'   => 'Nelze odeslat prázdnou zprávu.',
+                'min_length' => 'Zpráva musí obsahovat alespoň 1 znak.',
+                'max_length' => 'Zpráva je příliš dlouhá. Maximální délka je 1000 znaků.'
+            ]
+        ]
+    ];
+
+
+    }

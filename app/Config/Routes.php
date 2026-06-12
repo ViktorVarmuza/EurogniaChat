@@ -24,5 +24,6 @@ $routes->group('', ['filter' => 'unauth'], function ($routes) {
 
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('chat', 'ChatController::show');
-    $routes->post('chat/send', 'ChatController::sendMessage');
+    $routes->get('api/messages', 'Api\ApiController::index');
+    $routes->post('api/send', 'Api\ApiController::create');
 });

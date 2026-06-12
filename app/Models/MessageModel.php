@@ -45,11 +45,16 @@ class MessageModel extends Model
     protected $afterDelete    = [];
 
 
-    public function getMessagesWithUser()
+    public function getMessagesWithUser(?int $lastId = null)
     {
-        return $this->select('messages.*, users.username')
-            ->join('users', 'users.id = messages.user_id')
-            ->orderBy('messages.created_at', 'ASC')
-            ->findAll();
+        $builder = $this->select('messages.*, users.username')
+            ->join('users', 'users.id = messages.user_id');
+
+        if ($lastId !== null) {
+            $builder->where('messages.id >', $lastId);
+        }
+
+        return $builder->orderBy('messages.id', 'ASC')->findAll();
     }
+
 }

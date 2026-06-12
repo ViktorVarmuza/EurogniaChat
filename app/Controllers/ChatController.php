@@ -27,12 +27,4 @@ class ChatController extends BaseController
             'messages' => $messages
         ]);
     }
-
-    public function sendMessage() {
-        
-
-
-
-
-    }
 }

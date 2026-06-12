@@ -1,6 +1,5 @@
 <?= $this->extend('layout/layout') ?>
 
-<?= $this->section('title') ?><?= esc('Vítejte v Chat Roomu') ?><?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
 <div class="container">

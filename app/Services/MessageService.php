@@ -13,14 +13,47 @@ class MessageService
         $this->messageModel = new MessageModel();
     }
 
-    public function getChatMessages(int $currentUserId)
-    {
-        $messages = $this->messageModel->getMessagesWithUser();
 
-        foreach ($messages as $msg) {
-            $msg->is_mine = ((int)$msg->user_id === $currentUserId);
+
+    public function getChatMessages($currentUserId, ?int $lastId = null)
+    {
+
+        $messages = $this->messageModel->getMessagesWithUser($lastId);
+
+        foreach ($messages as &$msg) {
+
+            $msg->content = esc($msg->content);
+            $msg->username = esc($msg->username);
+
+
+            $msg->time = date('H:i', strtotime($msg->created_at));
+
+            $msg->is_mine = ($msg->user_id == $currentUserId);
         }
 
         return $messages;
+    }
+
+    public function createMessage($userId,  $content)
+    {   
+        
+        $data = [
+            'user_id' => $userId,
+            'content' => $content
+        ];
+
+        if ($this->messageModel->insert($data)) {
+
+            $insertId = $this->messageModel->getInsertID();
+
+            return [
+                'id'         => $insertId,
+                'user_id'    => $userId,
+                'content'    => $content,
+                'created_at' => date('Y-m-d H:i:s'),
+                'csrf_token' => csrf_hash()
+            ];
+        }
+        return false;
     }
 }
