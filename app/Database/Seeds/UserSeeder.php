@@ -22,5 +22,7 @@ class UserSeeder extends Seeder
 
             $this->db->table('users')->insert($data);
         }
+
+       
     }
 }

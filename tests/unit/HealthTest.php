@@ -4,17 +4,15 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Tests\Support\Libraries\ConfigReader;
 
-/**
- * @internal
- */
+
 final class HealthTest extends CIUnitTestCase
 {
-    public function testIsDefinedAppPath(): void
+    public function testIsDefinedAppPath()
     {
         $this->assertTrue(defined('APPPATH'));
     }
 
-    public function testBaseUrlHasBeenSet(): void
+    public function testBaseUrlHasBeenSet()
     {
         $validation = service('validation');
 

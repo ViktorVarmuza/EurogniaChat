@@ -2,12 +2,10 @@
 
 use CodeIgniter\Test\CIUnitTestCase;
 
-/**
- * @internal
- */
+
 final class ExampleSessionTest extends CIUnitTestCase
 {
-    public function testSessionSimple(): void
+    public function testSessionSimple()
     {
         $session = service('session');
 
