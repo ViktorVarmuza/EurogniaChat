@@ -30,7 +30,7 @@ jobs:
 
    
     - name: Install Dependencies
-      run: composer install --progress --prefer-dist --no-interaction
+      run: composer install --prefer-dist --no-interaction
 
     
     - name: Execute Tests
