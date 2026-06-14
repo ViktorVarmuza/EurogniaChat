@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\App\Controllers; 
+namespace Tests\App\Controllers;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\FeatureTestTrait;
@@ -11,7 +11,7 @@ final class ChatApiTest extends CIUnitTestCase
     use FeatureTestTrait;
     use DatabaseTestTrait;
 
-    
+
     protected $migrate = true;
     protected $namespace = 'App';
     protected $seed = \Tests\Support\Database\Seeds\TestChatSeeder::class;
@@ -33,19 +33,22 @@ final class ChatApiTest extends CIUnitTestCase
 
     public function testPostMessageCreatesMessage()
     {
-        
-        $this->withSession(['userId' => 1]);
+       
+        $this->withSession([
+            'isLoggedIn' => true,
+            'userId'     => 1
+        ]);
 
         $post = ['content' => 'Integration test message'];
 
+        
         $result = $this->post('api/send', $post);
 
-      
+        
         $result->assertStatus(201);
 
         $data = json_decode($result->getBody(), true);
 
-   
         $this->assertArrayHasKey('id', $data);
         $this->assertEquals($post['content'], $data['content']);
     }
