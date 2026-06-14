@@ -9,7 +9,8 @@ use CodeIgniter\HTTP\ResponseInterface;
 class UnauthFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
-    {
+    {   
+        //pokud je uzivatel prihlaseny tak ho to rovnou redirectne do roomky
         if (session()->get('isLoggedIn')) {
             return redirect()->to('chat')->with('success', 'Jsi již přihlášen.');
         }

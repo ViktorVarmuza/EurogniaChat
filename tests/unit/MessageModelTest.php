@@ -6,17 +6,16 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use App\Models\MessageModel;
 
-final class MessageModelTest extends CIUnitTestCase
+final class MessageModelTest extends CIUnitTestCase // kontrola pro zpravy
 {
     use DatabaseTestTrait;
 
-    // ZMĚNA: Musí být true, aby GitHub Actions věděly, že mají vytvořit tabulky
+    
     protected $migrate = true;
-    protected $namespace = 'App'; // Přidej pro jistotu, ať CI ví, kde hledat migrace
-
+    protected $namespace = 'App';
     protected $seed = \Tests\Support\Database\Seeds\TestChatSeeder::class;
 
-    public function testGetMessagesWithUserReturnsMessages()
+    public function testGetMessagesWithUserReturnsMessages() // kontrola ziskavani zprav z modelu
     {
         $model = new MessageModel();
         $messages = $model->getMessagesWithUser();
@@ -27,7 +26,7 @@ final class MessageModelTest extends CIUnitTestCase
         $this->assertObjectHasProperty('content', $messages[0]);
     }
 
-    public function testGetMessagesWithLastIdFilters()
+    public function testGetMessagesWithLastIdFilters() //kontrola ziskavni zprav od urciteho id 
     {
         $model = new MessageModel();
 

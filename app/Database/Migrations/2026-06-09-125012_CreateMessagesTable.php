@@ -6,7 +6,7 @@ use CodeIgniter\Database\Migration;
 
 class CreateMessagesTable extends Migration
 {
-    public function up()
+    public function up() // vytvoreni tabulky pro zpravy
     {
         $this->forge->addField([
             'id' => [

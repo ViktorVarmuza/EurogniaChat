@@ -38,7 +38,7 @@ class Validation extends BaseConfig
         'single' => 'CodeIgniter\Validation\Views\single',
     ];
 
-
+    //validace registrace, loginu, a zpravy
     public array $registration = [
         'username' => [
             'rules'  => 'required|alpha_numeric_space|min_length[3]|is_unique[users.username]',

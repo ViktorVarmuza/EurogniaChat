@@ -7,7 +7,7 @@ use CodeIgniter\RESTful\ResourceController;
 
 use App\Services\MessageService;
 
-class ApiController extends ResourceController
+class ApiController extends ResourceController // RestApi
 {
     protected $messageService;
 
@@ -16,7 +16,7 @@ class ApiController extends ResourceController
         $this->messageService = new MessageService();
     }
 
-    public function index()
+    public function index() // vraci zpravy v pripade zpravy od urciteho id zpravy
     {
 
         $lastId = $this->request->getGet('lastId');
@@ -30,7 +30,7 @@ class ApiController extends ResourceController
     }
 
 
-    public function create()
+    public function create() //vytvoreni nove zpravy
     {
         if (!$this->validate('message')) {
             return $this->failValidationErrors($this->validator->getErrors());

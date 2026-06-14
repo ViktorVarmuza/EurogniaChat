@@ -6,7 +6,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use App\Services\AuthService;
 
-final class AuthServiceTest extends CIUnitTestCase
+final class AuthServiceTest extends CIUnitTestCase // kontrola auth 
 {
     use DatabaseTestTrait;
 
@@ -14,7 +14,7 @@ final class AuthServiceTest extends CIUnitTestCase
     protected $namespace = 'App';
     protected $seed      = \Tests\Support\Database\Seeds\TestChatSeeder::class;
 
-    public function testRegisterCreatesUser()
+    public function testRegisterCreatesUser() // kontrola registrace
     {
         $service = new AuthService();
 
@@ -30,11 +30,11 @@ final class AuthServiceTest extends CIUnitTestCase
 
         $this->assertNotNull($user);
 
-        // OPRAVENO: Nyní správně kontrolujeme sloupec password_hash v objektu
+        
         $this->assertTrue(password_verify($password, $user->password_hash));
     }
 
-    public function testAttemptLoginWithSeededUser()
+    public function testAttemptLoginWithSeededUser() // kontrola loginu
     {
         $session = service('session');
         $service = new AuthService();

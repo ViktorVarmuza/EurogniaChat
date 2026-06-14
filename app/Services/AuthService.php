@@ -14,17 +14,17 @@ class AuthService
     }
 
 
-    public function register($username, $password)
-    {
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-
+    public function register($username, $password) //funkce na registraci
+    {   //zahoshovani hesla
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT); 
+        //vytvoreni uzivatele
         return $this->userModel->save([
             'username'      => $username,
             'password_hash' => $passwordHash,
         ]);
     }
 
-    public function attemptLogin($username, $password)
+    public function attemptLogin($username, $password) //prihlaseni
     {
 
         $user = $this->userModel->where('username', $username)->first();
@@ -38,7 +38,7 @@ class AuthService
             return false;
         }
 
-      
+        //pokud je heslo stejne jako v databazi tak je prihlaseni uspesne a ulozi se do sessionu
         if (password_verify($password, $user->password_hash)) {
 
             session()->set([

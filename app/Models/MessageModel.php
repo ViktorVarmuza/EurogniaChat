@@ -44,7 +44,7 @@ class MessageModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-
+    //funkce pro ziskani vsech zprav s pripojenymi uzivateli a popripade ziskani od urciteho id
     public function getMessagesWithUser(?int $lastId = null)
     {
         $builder = $this->select('messages.*, users.username')

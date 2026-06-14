@@ -15,11 +15,12 @@ class MessageService
 
 
 
-    public function getChatMessages($currentUserId, ?int $lastId = null)
+    public function getChatMessages($currentUserId, ?int $lastId = null) // ziskani zprav
     {
 
         $messages = $this->messageModel->getMessagesWithUser($lastId);
 
+        //prevedeni dat z databaze i urceni jestli ji posílal prihlaseny uzivatel
         foreach ($messages as &$msg) {
 
             $msg->content = esc($msg->content);
@@ -34,14 +35,14 @@ class MessageService
         return $messages;
     }
 
-    public function createMessage($userId,  $content)
+    public function createMessage($userId,  $content) // vytvoreni zpravy
     {   
         
         $data = [
             'user_id' => $userId,
             'content' => $content
         ];
-
+        // ulozeni zpravy a response
         if ($this->messageModel->insert($data)) {
 
             $insertId = $this->messageModel->getInsertID();

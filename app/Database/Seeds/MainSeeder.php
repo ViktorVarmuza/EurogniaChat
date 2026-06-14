@@ -4,7 +4,7 @@ namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
 
-class MainSeeder extends Seeder
+class MainSeeder extends Seeder // spojuje oba seedery do jednoho aby se nemuseli volat postupne
 {
     public function run()
     {

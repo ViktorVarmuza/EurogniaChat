@@ -10,7 +10,8 @@ class AuthFilter implements FilterInterface
 {
 
     public function before(RequestInterface $request, $arguments = null)
-    {
+    {   
+        //kontroluje prihlaseni pokud neni prihlaseny redirect na login
         if (!session()->get('isLoggedIn')) {
             return redirect()->to('login')->with('error', 'Nejdříve se musíš přihlásit.');
         }

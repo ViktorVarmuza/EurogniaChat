@@ -19,7 +19,7 @@ class ChatController extends BaseController
     }
 
 
-    public function show()
+    public function show() // vraci jen view a pomoci funkce v messageService ziskava zpravy
     {
         $messages = $this->messageService->getChatMessages(session()->get('userId'));
 

@@ -26,7 +26,7 @@
                     <div class="tab-content" id="authTabsContent">
 
                         <div class="tab-pane fade show active" id="login-content" role="tabpanel">
-                            <form id="form-login" action="<?= esc(base_url('login'), 'attr') ?>" method="POST">
+                            <form id="form-login" action="<?= esc(base_url('login'), 'attr') ?>" method="POST" >
                                 <?= csrf_field() ?>
 
                                 <div class="form-floating mb-3">
@@ -78,4 +78,3 @@
 
 <script src="<?= base_url('js/authValidation.js') ?>"></script>
 <?= $this->endSection() ?>
-

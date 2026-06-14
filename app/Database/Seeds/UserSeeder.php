@@ -6,7 +6,7 @@ use CodeIgniter\Database\Seeder;
 use Faker\Factory as Faker;
 
 
-class UserSeeder extends Seeder
+class UserSeeder extends Seeder // pomoci fakeru vytvari nahodne uzivatele
 {
     public function run()
     {

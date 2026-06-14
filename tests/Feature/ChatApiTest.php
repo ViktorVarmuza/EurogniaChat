@@ -6,7 +6,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
 
-final class ChatApiTest extends CIUnitTestCase
+final class ChatApiTest extends CIUnitTestCase // kontroluje restApi
 {
     use FeatureTestTrait;
     use DatabaseTestTrait;
@@ -16,7 +16,7 @@ final class ChatApiTest extends CIUnitTestCase
     protected $namespace = 'App';
     protected $seed = \Tests\Support\Database\Seeds\TestChatSeeder::class;
 
-    public function testGetMessagesEndpointReturnsJson()
+    public function testGetMessagesEndpointReturnsJson()// kontrola vraceni zpravy
     {
         $result = $this->get('api/messages');
 
@@ -31,7 +31,7 @@ final class ChatApiTest extends CIUnitTestCase
         $this->assertArrayHasKey('username', $data[0]);
     }
 
-    public function testPostMessageCreatesMessage()
+    public function testPostMessageCreatesMessage() // kontrola vytvoreni zpravy
     {
        
         $this->withSession([

@@ -1,5 +1,5 @@
-// 1. CHYBĚLO: Definice proměnné pro hlídání posledního ID zprávy
-let lastMessageId = 0;
+
+let lastMessageId = 0; // ukladani id posledni zpravy
 
 document.addEventListener("DOMContentLoaded", function () {
     const chatBox = document.getElementById('chat-box');
@@ -7,13 +7,13 @@ document.addEventListener("DOMContentLoaded", function () {
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    // 2. CHYBĚLO: Načtení nejvyššího ID zpráv, které už na stránce jsou z PHP
-    updateLastMessageId();
 
-    // Interval nastaven na 1 sekundu (1000 ms) je v pořádku
-    setInterval(checkForNewMessages, 1000);
+    updateLastMessageId(); // zjistuje lastMessageId
+
+    setInterval(checkForNewMessages, 1000); // nastaveni intervalu pro kontrolu jestli neprisla nova zprava
 });
 
+//odeslani zpravy
 document.getElementById('messageForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
@@ -50,16 +50,17 @@ document.getElementById('messageForm').addEventListener('submit', async function
     }
 });
 
+// kontrola novych zprav
 async function checkForNewMessages() {
     try {
-        // Nyní už lastMessageId bezpečně existuje
-        const response = await fetch(`<?= base_url('api/messages') ?>?lastId=${lastMessageId}`, {
+        //kontroluje nove zpravy od urciteho id aby se neposilali vsechny zpravy z databaze
+        const response = await fetch(`${BASE_URL}api/messages?lastId=${lastMessageId}`, {
             method: 'GET',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'
             }
         });
-
+ 
         if (response.ok) {
             const messages = await response.json();
 
@@ -74,25 +75,24 @@ async function checkForNewMessages() {
     }
 }
 
+//pridava zpravu do chat-box
 function addMessage(data) {
     const chatBox = document.getElementById('chat-box');
     if (!chatBox) return;
 
     const msgData = data.message || data;
 
-    // Ochrana proti duplicitám: Pokud už zpráva v chatu je, podruhé ji nepřidáváme
+
     if (msgData.id && document.querySelector(`[data-msg-id="${msgData.id}"]`)) {
         return;
     }
 
-    // Posuneme hodnotu lastMessageId, pokud je nové ID vyšší
+    // PlastMessageId, pokud je nové ID vyšší
     if (msgData.id && msgData.id > lastMessageId) {
         lastMessageId = msgData.id;
     }
 
-    // OPRAVA: Dynamické barvy a zarovnání podle "is_mine" ze serveru
-    // Pokud posíláš novou zprávu přes POST, is_mine tam z ApiControlleru nemusí přijít,
-    // proto dáme "true" jako fallback (protože jsi ji právě odeslal ty).
+
     const isMine = msgData.is_mine !== undefined ? msgData.is_mine : true;
 
     const username = msgData.username || 'Uživatel';
@@ -101,7 +101,7 @@ function addMessage(data) {
     const alignmentClass = isMine ? 'justify-content-end' : 'justify-content-start';
     const bgClass = isMine ? 'bg-primary text-white' : 'bg-white border';
 
-    // Vykreslení HTML struktury (přidán atribut data-msg-id)
+
     const messageHtml = `
             <div class="d-flex mb-2 ${alignmentClass}" data-msg-id="${msgData.id || ''}">
                 <div class="px-3 py-2 rounded shadow-sm ${bgClass}" style="max-width: 60%;">
@@ -119,7 +119,7 @@ function addMessage(data) {
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// CHYBĚLO: Pomocná funkce, která projde PHP zprávy při načtení a zjistí nejvyšší ID
+//zjistuje lastmessageid
 function updateLastMessageId() {
     const messages = document.querySelectorAll('#chat-box [data-msg-id]');
     messages.forEach(msg => {
@@ -131,12 +131,3 @@ function updateLastMessageId() {
 }
 
 
-document.addEventListener('click', function (e) {
-    if (e.target && e.target.classList.contains('close-alert-btn')) {
-        const alertBox = e.target.closest('.alert');
-        if (alertBox) {
-            alertBox.classList.add('d-none');
-            alertBox.classList.remove('show');
-        }
-    }
-});

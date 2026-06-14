@@ -5,7 +5,7 @@ namespace App\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 use Faker\Factory as Faker;
 
-class ChatSeeder extends Seeder
+class ChatSeeder extends Seeder // pomoci fakeru generuje nahodne zpravy 
 {
     public function run()
     {
