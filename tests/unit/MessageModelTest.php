@@ -1,52 +1,44 @@
 <?php
 
-namespace Tests\App\Controllers; 
+namespace Tests\App\Models; // Nezapomeň na správný namespace, pokud ho nemáš
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
+use App\Models\MessageModel;
 
-final class ChatApiTest extends CIUnitTestCase
+final class MessageModelTest extends CIUnitTestCase
 {
-    use FeatureTestTrait;
     use DatabaseTestTrait;
 
-    
+    // ZMĚNA: Musí být true, aby GitHub Actions věděly, že mají vytvořit tabulky
     protected $migrate = true;
-    protected $namespace = 'App';
+    protected $namespace = 'App'; // Přidej pro jistotu, ať CI ví, kde hledat migrace
+
     protected $seed = \Tests\Support\Database\Seeds\TestChatSeeder::class;
 
-    public function testGetMessagesEndpointReturnsJson()
+    public function testGetMessagesWithUserReturnsMessages()
     {
-        $result = $this->get('api/messages');
+        $model = new MessageModel();
+        $messages = $model->getMessagesWithUser();
 
-        $result->assertStatus(200);
-
-        $result->assertHeaderPresent('Content-Type');
-
-        $data = json_decode($result->getBody(), true);
-
-        $this->assertIsArray($data);
-        $this->assertNotEmpty($data);
-        $this->assertArrayHasKey('username', $data[0]);
+        $this->assertIsArray($messages);
+        $this->assertNotEmpty($messages);
+        $this->assertObjectHasProperty('username', $messages[0]);
+        $this->assertObjectHasProperty('content', $messages[0]);
     }
 
-    public function testPostMessageCreatesMessage()
+    public function testGetMessagesWithLastIdFilters()
     {
-        
-        $this->withSession(['userId' => 1]);
+        $model = new MessageModel();
 
-        $post = ['content' => 'Integration test message'];
+        $all = $model->getMessagesWithUser();
+        $this->assertCount(2, $all);
 
-        $result = $this->post('api/send', $post);
+        $lastId = $all[0]->id;
+        $filtered = $model->getMessagesWithUser($lastId);
 
-      
-        $result->assertStatus(201);
-
-        $data = json_decode($result->getBody(), true);
-
-   
-        $this->assertArrayHasKey('id', $data);
-        $this->assertEquals($post['content'], $data['content']);
+        foreach ($filtered as $msg) {
+            $this->assertGreaterThan($lastId, $msg->id);
+        }
     }
 }
